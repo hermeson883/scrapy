@@ -2,7 +2,6 @@ import datetime
 import time
 from selenium.webdriver.common.by import By
 
-
 def handleMessager(drive):
     # Escolhendo o grupo aonde se guarda mensagens
     group = drive.find_element(By.XPATH, "//span[@title='Repositório']")
@@ -61,23 +60,29 @@ def sendMessage(drive, person_infos, next_phone_number):
     #Dormindo até lá
     time.sleep(2)
 
-    #Pegando a caixa de mensagens
+    message = f"Olá {person_infos['name']},me chamo Hermeson message_info sou da Infinity School. Você marcou uma aula para dia{person_infos['date']}? Se sim, o que iremos ver?"
+
+    sendToMessageBox(drive, message)
+
+def sendToMessageBox(drive, messageToSend):
     messageBox = drive.find_element(By.XPATH, "//*[@id='main']/footer/div[1]/div/span[2]/div/div[2]/div[1]")
 
-    #Deixando ela em foco
+    # Deixando ela em foco
     messageBox.click()
 
     # Enviando o texto
-    messageBox.send_keys(f"Olá {person_infos['name']},me chamo Hermeson message_info sou da Infinity School. Você marcou uma aula para dia{person_infos['date']}? Se sim, o que iremos ver?")
+    messageBox.send_keys(messageToSend)
 
-    #dormindo enquanto isso
+    # dormindo enquanto isso
     time.sleep(2)
 
-    #Procurando pelo botão de enviar mensagem
+    # Procurando pelo botão de enviar mensagem
     drive.find_element(By.XPATH, "//*[@id='main']/footer/div[1]/div/span[2]/div/div[2]/div[2]/button").click()
 
-    #Dormindo até lá
+    # Dormindo até lá
     time.sleep(2)
 
-    #Voltando para o grupo 'Repositório'
+    # Voltando para o grupo 'Repositório'
     drive.find_element(By.XPATH, "//span[@title='Repositório']").click()
+
+    time.sleep(5)
